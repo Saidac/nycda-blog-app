@@ -18,3 +18,21 @@ var Entery = sequelize.define('entery', {
 //     content: Sequelize.TEXT,
 //     email: Sequelize.STRING,
 // });
+
+//Dependencies
+
+app.use(morgan('dev'));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.set('view engine', 'pug');
+
+
+
+
+sequelize.sync().then(() => {
+  console.log('Connected to db');
+  app.listen(3000, () => {
+    console.log('Web Server is running on port 3000');
+  });
+});
