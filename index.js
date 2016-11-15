@@ -1,13 +1,14 @@
 const express = require('express'),
       morgan = require('morgan'),
-      pug = require('pug');
-      bodyParser = require('body-parser');
+      pug = require('pug'),
+      path = require('path'),
+      bodyParser = require('body-parser'),
       Sequelize = require('sequelize');
 
 var app = express();
     sequelize = new Sequelize('wille','wille', '', {dialect: 'postgres' });
 
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 
 //Models
 var Entery = sequelize.define('entery', {
