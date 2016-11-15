@@ -3,6 +3,7 @@ const express = require('express'),
       pug = require('pug'),
       bodyParser = require('body-parser'),
       methodOverride = require('method-override'),
+      displayRoutes = require('express-routemap'),
       Sequelize = require('sequelize');
 
 var app = express();
@@ -60,5 +61,6 @@ sequelize.sync().then(() => {
   console.log('Connected to db');
   app.listen(3000, () => {
     console.log('Web Server is running on port 3000');
+    displayRoutes(app);
   });
 });
