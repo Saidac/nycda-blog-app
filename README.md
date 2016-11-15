@@ -21,31 +21,31 @@ This is an exercise from NYCDA wdi JS Amsterdam in building a RESTful CRUD appli
     <td>GET</td>
     <td>/entries/:id</td>
     <td>show.pug</td>
-    <td>Show blog entery</td>
+    <td>Show blog entry</td>
   </tr>
   <tr>
     <td>POST</td>
     <td>/entries/td>
     <td>n/a</td>
-    <td>Post entery to server and redirect to ID</td>
+    <td>Post entry to server and redirect to ID</td>
   </tr>
   <tr>
     <td>PUT</td>
     <td>/entries/:id </td>
     <td>n/a</td>
-    <td>Update blog entery</td>
+    <td>Update blog entry</td>
   </tr>
   <tr>
     <td>DELETE</td>
     <td>/entries/:id </td>
     <td>n/a</td>
-    <td>Delete blog entery</td>
+    <td>Delete blog entry</td>
   </tr>
   <tr>
     <td>DELETE</td>
     <td>/entries/:id </td>
     <td>n/a</td>
-    <td>Delete blog entery</td>
+    <td>Delete blog entry</td>
   </tr>
   <tr>
     <td>GET</td>

@@ -11,7 +11,7 @@ var app = express();
 app.use(express.static(__dirname + '/public'));
 
 //Models
-var Entery = sequelize.define('entery', {
+var Entry = sequelize.define('entry', {
     title: Sequelize.TEXT,
     content: Sequelize.STRING,
     slug: Sequelize.TEXT
@@ -30,11 +30,11 @@ app.set('view engine', 'pug');
 
 // Setting app pug to root
 app.get('/', (request, response) =>{
-  Entery.findAll({ order: 'id DESC' }).then((entery) => {
-    entery.forEach((entery) => {
-      entery.createdAtFromNow = moment(entery.createdAt).fromNow();
+  Entry.findAll({ order: 'id DESC' }).then((entry) => {
+    entry.forEach((entry) => {
+      entry.createdAtFromNow = moment(entry.createdAt).fromNow();
     });
-    response.render('entries/index', { entries: entery });
+    response.render('entries/index', { entries: entry });
   });
 });
 
@@ -43,10 +43,10 @@ app.get('/entries/new', (request, response) => {
 });
 
 // Redirect user to frontpage after posting question
-app.post('/postentery', (request, response) => {
+app.post('/postentry', (request, response) => {
 
-  if (request.body.entery) {
-    Entery.create(request.body).then(() => {
+  if (request.body.entry) {
+    Entry.create(request.body).then(() => {
       response.redirect('/');
     });
   } else {
