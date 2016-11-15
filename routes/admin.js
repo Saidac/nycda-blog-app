@@ -8,6 +8,7 @@ router.get('/entries', (request, response) => {
     response.render('entries/index', { entries: entry });
   });
 });
+
 // New
 router.get('/entries/new', (request, response) => {
   response.render('entries/new');
@@ -19,9 +20,12 @@ router.get('/entries/:id/edit', (request, response) => {
       id: request.params.id
     }
   }).then((post) => {
-    response.render('posts/edit', { post: post });
+    response.render('posts/edit', { entries: entry });
   });
 });
+
+// So far so good!
+
 
 // Redirect user to root after posting new entry
 router.post('/postentry', (request, response) => {
@@ -47,7 +51,7 @@ router.put('/entries/:id', (request, response) => {
 });
 
 // Delete
-router.delete('/entry/:id', (request, response) => {
+router.delete('/entries/:id', (request, response) => {
   Entry.destroy({
     where: {
       id: request.params.id
