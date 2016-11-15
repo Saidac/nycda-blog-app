@@ -9,9 +9,9 @@ block content
         form(action="/postentry" method="POST")
           div(class="form-group")
             label(for="entry-title") Title
-            input(name="signature" class="form-control" id="query-signature")
+            input(name="title" class="form-control" id="entry-title")
           div(class="form-group")
-            label(for="entry-content") Entry
-            textarea(name="question" type="text" rows=5 class="form-control" id="query-question")
+            label(for="entry-content") Content
+            textarea(name="content" type="text" rows=5 class="form-control" id="entry-content")
           div(class="form-group text-xs-right")
             button(type="submit" class="btn btn-lg btn-secondary") Post

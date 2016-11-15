@@ -1,39 +1,30 @@
 const express = require('express'),
       morgan = require('morgan'),
       pug = require('pug'),
-      path = require('path'),
       bodyParser = require('body-parser'),
       Sequelize = require('sequelize');
 
 var app = express();
     sequelize = new Sequelize('wille','wille', '', {dialect: 'postgres' });
 
-app.use(express.static(__dirname + '/public'));
-
 //Models
 var Entry = sequelize.define('entry', {
-    title: Sequelize.TEXT,
-    content: Sequelize.STRING,
-    slug: Sequelize.TEXT
+  title: Sequelize.TEXT,
+  content: Sequelize.STRING
 });
 
-// var Comments = sequelize.define('comment', {
-//     content: Sequelize.TEXT,
-//     email: Sequelize.STRING,
-// });
 
 app.use(morgan('dev'));
+
+app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.set('view engine', 'pug');
 
 // Setting app pug to root
-app.get('/', (request, response) =>{
-  Entry.findAll({ order: 'id DESC' }).then((entry) => {
-    entry.forEach((entry) => {
-      entry.createdAtFromNow = moment(entry.createdAt).fromNow();
-    });
+app.get('/', (request, response) => {
+  Entry.findAll({ order: [['createdAt', 'DESC']] }).then((entry) => {
     response.render('entries/index', { entries: entry });
   });
 });
@@ -45,7 +36,7 @@ app.get('/entries/new', (request, response) => {
 // Redirect user to frontpage after posting question
 app.post('/postentry', (request, response) => {
 
-  if (request.body.entry) {
+  if (request.body.content) {
     Entry.create(request.body).then(() => {
       response.redirect('/');
     });
