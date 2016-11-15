@@ -1,0 +1,17 @@
+extends ../app.pug
+
+block content
+  .container
+    .row
+      .col-xs-8.offset-xs-2
+        h1 Write a blog entery
+        hr
+        form(action="/postentery" method="POST")
+          div(class="form-group")
+            label(for="entery-title") Title
+            input(name="signature" class="form-control" id="query-signature")
+          div(class="form-group")
+            label(for="entery-content") Entery
+            textarea(name="question" type="text" rows=5 class="form-control" id="query-question")
+          div(class="form-group text-xs-right")
+            button(type="submit" class="btn btn-lg btn-secondary") Post

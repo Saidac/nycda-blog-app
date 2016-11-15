@@ -1,17 +1,63 @@
 <h1>Blog application</h1>
-<hr>
 <p>
-This is an exercise from NYCDA wdi JS Amsterdam in building a restful blog application with a MVC framework using a stack of: node, express, postgressql, sequelize and a HTTP method override middelware for CRUD functionality and pug view engine and Bootstrap for syling.
+This is an exercise from NYCDA wdi JS Amsterdam in building a RESTful CRUD application with a MVC framework using a stack of: node, express, postgressql, sequelize, HTTP method override middelware, the pug template engine and Bootstrap for styling.
 </p>
-
+<p>
 <h2>RESTful Routes</h2>
-
-GET     /entries            index.pug     List all posts <br>
-GET     /entries/:id        show.pug      Show specific post<br>
-<br>
-POST    /entries                          Post post to server and redirect to ID<br>
-PUT     /entries/:id                      Update post<br>
-DELETE  /entries/:id                      Delete post<br>
-<br>
-GET     /entries/new        new.pug       Render view for create new entry form<br>
-GET     /entries/:id/edit   edit.pug      Render view for edit entry form<br>
+<table>
+  <tr>
+    <th>HTTP method</th>
+    <th>Route</th>
+    <th>View</th>
+    <th>Function</th>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td>/entries</td>
+    <td>index.pug</td>
+    <td>List all blog entries</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td>/entries/:id</td>
+    <td>show.pug</td>
+    <td>Show blog entery</td>
+  </tr>
+  <tr>
+    <td>POST</td>
+    <td>/entries/td>
+    <td>n/a</td>
+    <td>Post entery to server and redirect to ID</td>
+  </tr>
+  <tr>
+    <td>PUT</td>
+    <td>/entries/:id </td>
+    <td>n/a</td>
+    <td>Update blog entery</td>
+  </tr>
+  <tr>
+    <td>DELETE</td>
+    <td>/entries/:id </td>
+    <td>n/a</td>
+    <td>Delete blog entery</td>
+  </tr>
+  <tr>
+    <td>DELETE</td>
+    <td>/entries/:id </td>
+    <td>n/a</td>
+    <td>Delete blog entery</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td>/entries/new </td>
+    <td>new.pug</td>
+    <td>Render view for create new blog entry form</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td>/entries/:id/edit</td>
+    <td>edit.pug</td>
+    <td>Render view for edit blog entry form</td>
+  </tr>
+</table>
+</p>

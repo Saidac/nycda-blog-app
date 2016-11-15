@@ -7,6 +7,8 @@ const express = require('express'),
 var app = express();
     sequelize = new Sequelize('wille','wille', '', {dialect: 'postgres' });
 
+app.use(express.static('public'));
+
 //Models
 var Entery = sequelize.define('entery', {
     title: Sequelize.TEXT,
@@ -31,12 +33,12 @@ app.get('/', (request, response) =>{
     entery.forEach((entery) => {
       entery.createdAtFromNow = moment(entery.createdAt).fromNow();
     });
-    response.render('enteries/index', { queries: query });
+    response.render('entries/index', { entries: entery });
   });
 });
 
-app.get('/enteries/new', (request, response) => {
-  response.render('enteries/new');
+app.get('/entries/new', (request, response) => {
+  response.render('entries/new');
 });
 
 // Redirect user to frontpage after posting question

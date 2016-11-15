@@ -1,0 +1,12 @@
+extends ../app.pug
+
+block content
+  .cointainer
+    br
+    each entery in entries
+      .row
+      .col-sm-6.offset-sm-2
+        .card.card-block
+            a(href="/enteries/" + entery.id)
+            h3= entery.title
+            p= entery.content
