@@ -34,13 +34,13 @@ app.use(methodOverride(function (request, respond) {
   }
 }));
 
-app.use('/entries', adminRouter);
+app.use('/admin', adminRouter);
 
 // SFSG ##########################################
 
 app.get('/', (request, respond) => {
   Entry.findAll().then((enteries) => {
-    respond.render('index', { enteries: enteries });
+    respond.render('app', { enteries: enteries });
   });
 });
 
