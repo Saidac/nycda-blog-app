@@ -25,20 +25,36 @@ app.set('view engine', 'pug');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(methodOverride(function (req, res) {
-  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+app.use(methodOverride(function (request, respond) {
+  if (request.body && typeof request.body === 'object' && '_method' in request.body) {
     // look in urlencoded POST bodies and delete it
-    var method = req.body._method;
-    delete req.body._method;
+    var method = request.body._method;
+    delete request.body._method;
     return method;
   }
 }));
 
-app.get('/', (request, response) => {
-  response.redirect('/entries');
+app.use('/entries', adminRouter);
+
+// SFSG ##########################################
+
+app.get('/', (request, respond) => {
+  Entry.findAll().then((enteries) => {
+    respond.render('index', { enteries: enteries });
+  });
 });
 
-app.use('/entries', adminRouter);
+app.get('/:slug', (request, respond) => {
+  Entry.findOne({
+    where: {
+      slug: request.params.slug
+    }
+  }).then((post) => {
+    respond.render('entries/show', { entry: entries });
+  }).catch((error) => {
+    respond.status(404).end();
+  });
+});
 
 sequelize.sync().then(() => {
   console.log('Connected to db');
