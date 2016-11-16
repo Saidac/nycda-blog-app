@@ -6,8 +6,9 @@ html
   body
     nav(class="navbar navbar-light bg-faded")
       a(href="/" class="navbar-brand")='William Saidac | Blog '
-      a(href="/entries/new" class="btn btn-secondary")='Write'
+      a(href="admin/entries/new" class="btn btn-secondary")='Write'
+
+    block content
 
     script(src='/js/jquery-3.1.1.js')
     script(src='/js/bootstrap.min.js')
-    block content
