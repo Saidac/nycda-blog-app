@@ -33,8 +33,8 @@ app.use('/admin', adminRouter);
 // SFSG ##########################################
 
 app.get('/', (request, respond) => {
-  db.Entry.findAll().then((enteries) => {
-    respond.render('app', { enteries: enteries });
+  db.Entry.findAll().then((entries) => {
+    respond.render('index', { entries: entries });
   });
 });
 
