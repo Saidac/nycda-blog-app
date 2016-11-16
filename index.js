@@ -3,22 +3,15 @@ const express = require('express'),
       pug = require('pug'),
       bodyParser = require('body-parser'),
       methodOverride = require('method-override'),
-      displayRoutes = require('express-routemap'),
       Sequelize = require('sequelize');
 
+var db = require('./models');
+
 var app = express();
-    sequelize = new Sequelize('wille','wille', '', {dialect: 'postgres' });
 
 var adminRouter = require('./routes/admin');
 
 app.use(express.static(__dirname + '/public'));
-
-
-//Models
-var Entry = sequelize.define('entry', {
-  title: Sequelize.TEXT,
-  content: Sequelize.STRING
-});
 
 app.use(morgan('dev'));
 
@@ -40,13 +33,13 @@ app.use('/admin', adminRouter);
 // SFSG ##########################################
 
 app.get('/', (request, respond) => {
-  Entry.findAll().then((enteries) => {
+  db.Entry.findAll().then((enteries) => {
     respond.render('app', { enteries: enteries });
   });
 });
 
 app.get('/:slug', (request, respond) => {
-  Entry.findOne({
+  db.Entry.findOne({
     where: {
       slug: request.params.slug
     }
@@ -57,10 +50,9 @@ app.get('/:slug', (request, respond) => {
   });
 });
 
-sequelize.sync().then(() => {
+db.sequelize.sync().then(() => {
   console.log('Connected to db');
   app.listen(3000, () => {
     console.log('Web Server is running on port 3000');
-    displayRoutes(app);
   });
 });
