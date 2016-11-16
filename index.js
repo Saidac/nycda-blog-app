@@ -19,7 +19,7 @@ app.set('view engine', 'pug');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(methodOverride(function (request, respond) {
+app.use(methodOverride(function (request, response) {
   if (request.body && typeof request.body === 'object' && '_method' in request.body) {
     // look in urlencoded POST bodies and delete it
     var method = request.body._method;
@@ -32,21 +32,21 @@ app.use('/admin', adminRouter);
 
 // SFSG ##########################################
 
-app.get('/', (request, respond) => {
+app.get('/', (request, response) => {
   db.Entry.findAll().then((entries) => {
-    respond.render('index', { entries: entries });
+    response.render('index', { entries: entries });
   });
 });
 
-app.get('/:slug', (request, respond) => {
+app.get('/:slug', (request, response) => {
   db.Entry.findOne({
     where: {
       slug: request.params.slug
     }
   }).then((post) => {
-    respond.render('entries/show', { entry: entries });
+    response.render('entries/show', { entry: entries });
   }).catch((error) => {
-    respond.status(404).end();
+    response.status(404).end();
   });
 });
 

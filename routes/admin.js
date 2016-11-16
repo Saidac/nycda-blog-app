@@ -1,47 +1,38 @@
 var express = require('express'),
     db = require('../models'),
-    Sequelize = require('sequelize'),
     router = express.Router();
 
-
-// Setting app pug to root
 router.get('/entries', (request, response) => {
-  db.Entry.findAll({ order: [['createdAt', 'DESC']] }).then((entry) => {
-    response.render('entries/index', { entries: entry });
+  db.Entry.findAll().then((entries) => {
+    response.render('entries/index', { entries: entries });
+  }).catch((error) => {
+    throw error;
   });
 });
 
-// New
 router.get('/entries/new', (request, response) => {
   response.render('entries/new');
 });
 
-router.get('/entries/:id/edit', (request, response) => {
-  db.Entry.findOne({
-    where: {
-      id: request.params.id
-    }
-  }).then((post) => {
-    response.render('posts/edit', { entries: entry });
+router.get('/entries/:id', (request, response) => {
+  db.Entry.findById(request.params.id).then((entry) => {
+    response.render('entries/show', {entry: entry });
   });
 });
 
-// So far so good!
-
-
-// Redirect user to root after posting new entry
-router.post('/postentry', (request, response) => {
-
-  if (request.body.content) {
-    db.Entry.create(request.body).then(() => {
-      response.redirect('/');
-    });
-  } else {
-    response.redirect('/');
-  }
+router.get('/entries/:id/edit', (request, response) => {
+  console.log('this gets hit');
+  db.Entry.findById(request.params.id).then((entry) => {
+    response.render('entries/edit', { entry: entry });
+  });
 });
 
-// Edit
+router.post('/entries', (request, response) => {
+  db.Entry.create(request.body).then((entry) => {
+    response.redirect('/' + entry.slug);
+  });
+});
+
 router.put('/entries/:id', (request, response) => {
   db.Entry.update(request.body, {
     where: {
@@ -52,7 +43,6 @@ router.put('/entries/:id', (request, response) => {
   });
 });
 
-// Delete
 router.delete('/entries/:id', (request, response) => {
   db.Entry.destroy({
     where: {

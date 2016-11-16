@@ -1,19 +1,19 @@
-extends ../application.pug
+extends ../app.pug
 
 block content
   .container
     h1 Edit Form
     hr
-    form(action="/entrys/" + entry.id method="POST")
+    form(action="/admin/entries/" + entry.id method="POST")
       input(type="hidden" name="_method" value="PUT")
       div(class="form-group")
         label(for="entry-title") Title
         input(name="title" type="text" class="form-control" id="entry-title" value=entry.title)
       div(class="form-group")
-        label(for="entry-image") Image URL
-        input(name="imageURL" type="text" class="form-control" id="book-cover-image" value=entry.imgURL)
+        label(for="entry-slug") Slug
+        input(name="slug" type="text" class="form-control" id="book-cover-image" value=entry.slug)
       div(class="form-group")
         label(for="entry-content") Content
-        textarea(name="description" class="form-control" rows=5 id="entry-content")= entry.content
+        textarea(name="description" class="form-control" rows=5 id="entry-content")=entry.content
       div(class="form-group text-xs-right")
         button(type="submit" class="btn btn-lg btn-success") Submit
