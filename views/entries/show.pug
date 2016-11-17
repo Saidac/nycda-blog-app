@@ -1,0 +1,10 @@
+extends ../app.pug
+block content
+
+  .container
+		.card.card-block
+			.row
+				.col-xs-8.offset-xs-1
+					h3= entry.title
+					h2= entry.slug
+					p= entry.content

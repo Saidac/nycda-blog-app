@@ -1,0 +1,17 @@
+extends ../app.pug
+
+block content
+  .container
+    .row
+      .col-xs-8.offset-xs-2
+        h1 Create user
+        hr
+        form(action="/users" method="POST")
+          .form-group
+            label(for="user-email") Email
+            input(name="email" class="form-control" id="user-email")
+          .form-group
+            label(for="entry-slug") Password
+            input(name="slug" class="form-control" id="user-password")
+          .form-group
+            button(type="submit" class="btn btn-lg btn-secondary") Register

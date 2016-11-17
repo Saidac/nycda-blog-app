@@ -1,0 +1,15 @@
+extends app.pug
+block content
+
+  .container
+    .row
+      .col-xs-8.offset-xs-2
+        form(action="/login" method="POST")
+          .form-group
+            label(for="user-email") Email
+            input(type="email" name="email" class="form-control" id="user-email")
+          .form-group
+            label(for="user-password") Password
+            input(name="password" class="form-control" id="user-password")
+          .form-group
+            button(type="submit" class="btn btn-lg btn-secondary") Log in
