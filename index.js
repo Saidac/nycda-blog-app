@@ -16,8 +16,6 @@ app.use(morgan('dev'));
 
 app.use(express.static(__dirname + '/public'));
 
-app.use(session({ secret: 'our secret key' }));
-
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(methodOverride(function (request, response) {
@@ -44,58 +42,16 @@ app.get('/', (request, response) => {
   });
 });
 
-app.get('/register', (req, res) => {
-  res.render('users/new');
-});
-
-app.get('/login', (req, res) => {
-  res.render('login');
-});
-
-app.post('/login', (req, res) => {
-  console.log(req.body);
-
-  db.User.findOne({
-    where: {
-      email: req.body.email
-    }
-  }).then((userInDB) => {
-    if (userInDB.password === req.body.password) {
-      req.session.user = userInDB;
-      res.redirect('/');
-    } else {
-      res.redirect('/login');
-    }
-  }).catch(() => {
-    res.redirect('/login');
-  });
-});
-
-app.get('/logout', (req, res) => {
-  req.session.user = undefined;
-  res.redirect('/');
-});
-
-app.post('/users', (req, res) => {
-  db.User.create(req.body).then((user) => {
-    res.redirect('/');
-  }).catch(() => {
-    res.redirect('/register');
-  });
-});
-
-
 app.get('/:slug', (request, response) => {
   db.Entry.findOne({
-    where: {
-      slug: request.params.slug
-    }
-  }).then((entry) => {
-    response.render('entries/show', { entry: entries });
-  }).catch((error) => {
-    response.status(404).end();
+   where: {
+     slug: request.params.slug
+   }
+ }).then((entry) => {
+     response.render('entries/show', { entry: entry});
   });
 });
+
 
 db.sequelize.sync().then(() => {
   console.log('Connected to db');

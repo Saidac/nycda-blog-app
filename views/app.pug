@@ -7,10 +7,7 @@ html
     nav(class="navbar navbar-light bg-faded")
       a(href="/" class="navbar-brand")='William Saidac | Blog '
       a(href="admin/entries/new" class="btn btn-secondary")='Write'
-      a(href="login" class="btn btn-secondary")='Log in'
-      a(href="/register" class="btn btn-secondary")='Sign up'
-      if entry
-        a(href="admin/entries/" + entry.id +  "/edit" class="btn btn-secondary")='Admin'
+
 
 
     block content

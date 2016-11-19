@@ -21,7 +21,6 @@ router.get('/entries/:id', (request, response) => {
 });
 
 router.get('/entries/:id/edit', (request, response) => {
-  console.log('this gets hit');
   db.Entry.findById(request.params.id).then((entry) => {
     response.render('entries/edit', { entry: entry });
   });
