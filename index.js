@@ -30,6 +30,16 @@ app.use(methodOverride(function (request, response) {
 
 app.use('/admin', adminRouter);
 
+app.post('/entries/:id/comments', (request, response) => {
+  db.Entry.findById(request.params.id).then((entry) => {
+    var comment = request.body;
+    comment.EntryId = entry.id;
+
+    db.Comment.create(comment).then(() => {
+      response.redirect('/' + entry.slug);
+    });
+  });
+});
 
 app.get('/', (request, response) => {
   db.Entry.findAll({ order: [['createdAt', 'DESC']] }).then((entries) => {
@@ -49,8 +59,12 @@ app.get('/:slug', (request, response) => {
      slug: request.params.slug
    }
  }).then((entry) => {
-     response.render('entries/show', { entry: entry});
-    });
+   return entry.getComments().then((comments) => {
+     response.render('entries/show', { entry: entry, comments: comments });
+   });
+}).catch((error) => {
+  response.status(404).end();
+  });
 });
 
 

@@ -1,9 +1,21 @@
 extends ../app.pug
 block content
+  br
   .cointainer
-    br
     .row
-      .col-sm-6.offset-sm-2
+      .col-xs-8.offset-xs-2
         .card.card-block
-          h3= entry.title
-          p= entry.content
+            h1= entry.title
+            p= entry.content
+        each comment in comments
+          .card.card-block
+            p= comment.content
+    .row
+      .col-xs-8.offset-xs-2
+        .card.card-block
+          h5 Add a comment
+          form(action='/entries/' + entry.id + '/comments' method="POST")
+            .form-group
+              textarea.form-control(rows='5', name='content')
+            .form-group.text-xs-right
+              button.btn.btn-success.btn-sm(type='submit') Add comment
