@@ -7,7 +7,7 @@ block content
         .card.card-block
           .row
             .col-xs-8
-              h3=entry.title
+              h3(style={display: 'block'})=entry.title
             .col-xs-1.text-xs-right
               a(href="entries/" + entry.id + "/edit" class="btn btn-warning btn-sm")='Edit'
             .col-xs-1.text-xs-right
