@@ -20,7 +20,7 @@ router.get('/entries/:id/edit', (request, response) => {
        id: request.params.id
      }
    }).then((entry) => {
-      response.render('entries/show', { entry: entry});
+      response.render('entries/edit', { entry: entry});
    });
 });
 
