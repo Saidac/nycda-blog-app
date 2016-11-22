@@ -13,14 +13,24 @@ var app = express();
 
 var adminRouter = require('./routes/admin');
 
+// Playing around with creating middleware
+
+// var daLogzy =  (request, response, next) => {
+//   console.log('LOGGED');
+//   next();
+// };
+
+// app.use(daLogzy);
+
 app.set('view engine', 'pug');
 
 app.use(morgan('dev'));
 
 app.use(session({
-   secret: 'our secret key',
-   resave: true,
-   saveUninitialized: true
+  name:'session-cookie',
+  secret: 'our secret key',
+  resave: true,
+  saveUninitialized: true
  }));
 
 app.use(express.static(__dirname + '/public'));
