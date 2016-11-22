@@ -1,17 +1,19 @@
 extends ../app.pug
-
 block content
   .container
     .row
       .col-xs-8.offset-xs-2
         h1 Write a blog entry
         hr
-        form(action="/admin/postentry" method="POST")
-          div(class="form-group")
+        form(action="/admin/entries" method="POST")
+          .form-group
             label(for="entry-title") Title
             input(name="title" class="form-control" id="entry-title")
-          div(class="form-group")
+          .form-group
+            label(for="entry-slug") Slug
+            input(name="slug" class="form-control" id="entry-slug")
+          .form-group
             label(for="entry-content") Content
-            textarea(name="content" type="text" rows=5 class="form-control" id="entry-content")
+            textarea(name="content" rows=10 class="form-control" id="entry-content")
           div(class="form-group text-xs-right")
             button(type="submit" class="btn btn-lg btn-secondary") Post
