@@ -1,16 +1,18 @@
 extends ../app.pug
 block content
   br
-  each entry in entries
-    .cointainer
-      .col-xs-6.offset-xs-2
+  .cointainer
+    .col-xs-8.offset-xs-2
+      h3 Edit blog entries
+      hr
+      each entry in entries
         .card.card-block
           .row
-            .col-xs-8
-              h3(style={display: 'block'})=entry.title
+            .col-xs-9
+              h3=entry.title
             .col-xs-1.text-xs-right
-              a(href="entries/" + entry.id + "/edit" class="btn btn-warning btn-sm")='Edit'
+              a(href="entries/" + entry.id + "/edit" class="btn btn-secondary btn-sm")='Edit'
             .col-xs-1.text-xs-right
               form(action="/admin/entries/" + entry.id, method='POST')
                 input(type='hidden', name='_method', value='DELETE')
-                button.btn.btn-danger.btn-sm(type='submit') Delete
+                button.btn.btn-secondary.btn-sm(type='submit') Delete
