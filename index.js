@@ -41,6 +41,7 @@ app.post('/entries/:id/comments', (request, response) => {
   });
 });
 
+
 app.get('/', (request, response) => {
   db.Entry.findAll({ order: [['createdAt', 'DESC']] }).then((entries) => {
     response.render('index', { entries: entries });
