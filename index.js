@@ -71,8 +71,9 @@ app.get('/register', (request, response) => {
   response.render('users/new');
 });
 
+
 app.get('/login', (request, response) => {
-  response.render('login');
+  response.redirect('/admin');
 });
 
 app.post('/login', (request, response) => {
