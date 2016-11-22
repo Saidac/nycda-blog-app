@@ -4,6 +4,7 @@ const express = require('express'),
       morgan = require('morgan'),
       pug = require('pug'),
       session = require('express-session'),
+      displayRoutes = require('express-routemap'),
       Sequelize = require('sequelize');
 
 var db = require('./models');
@@ -16,7 +17,11 @@ app.set('view engine', 'pug');
 
 app.use(morgan('dev'));
 
-app.use(session({ secret: 'our secret key' }));
+app.use(session({
+   secret: 'our secret key',
+   resave: true,
+   saveUninitialized: true
+ }));
 
 app.use(express.static(__dirname + '/public'));
 
@@ -111,5 +116,6 @@ db.sequelize.sync().then(() => {
   console.log('Connected to db');
   app.listen(3001, () => {
     console.log('Web Server is running on port 3001');
+    displayRoutes(app);
   });
 });
