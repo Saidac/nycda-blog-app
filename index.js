@@ -48,11 +48,17 @@ app.get('/', (request, response) => {
   });
 });
 
-// app.get('/:id', (request, response) => {
-//    db.Entry.findById(request.params.id).then((entry) => {
-//          response.render('entries/show', { post: post });
-//   });
-// });
+app.get('/register', (request, response) => {
+  response.render('users/new');
+});
+
+app.post('/users', (request, response) => {
+    db.User.create(request.body).then((user) => {
+      response.redirect('/');
+    }).catch(() => {
+        response.redirect('/register');
+    });
+});
 
 app.get('/:slug', (request, response) => {
   db.Entry.findOne({
