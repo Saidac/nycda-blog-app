@@ -26,7 +26,7 @@ router.get('/entries/:id/edit', (request, response) => {
 
 router.post('/entries', (request, response) => {
   db.Entry.create(request.body).then((entry) => {
-    response.redirect('/' + post.slug);
+    response.redirect('/' + entry.slug);
   });
 });
 
