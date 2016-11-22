@@ -9,3 +9,7 @@ block content
             h3=entry.title
             div(class="col-sm-2 float-xs-right")
               a(href="entries/" + entry.id + "/edit" class="nav-item nav-link active")='Edit'
+
+              form(action="/admin/entries/" + entry.id, method='POST')
+                input(type='hidden', name='_method', value='DELETE')
+                button.btn.btn-danger(type='submit') Remove Entry
