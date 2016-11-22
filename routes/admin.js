@@ -14,21 +14,19 @@ router.get('/entries/new', (request, response) => {
   response.render('entries/new');
 });
 
-router.get('/entries/:id', (request, response) => {
-  db.Entry.findById(request.params.id).then((entry) => {
-    response.render('entries/show', {entry: entry });
-  });
-});
-
 router.get('/entries/:id/edit', (request, response) => {
-  db.Entry.findById(request.params.id).then((entry) => {
-    response.render('entries/edit', { entry: entry });
-  });
+   db.Entry.findOne({
+     where: {
+       id: request.params.id
+     }
+   }).then((entry) => {
+      response.render('entries/show', { entry: entry});
+   });
 });
 
 router.post('/entries', (request, response) => {
   db.Entry.create(request.body).then((entry) => {
-    response.redirect('/' + entry.slug);
+    response.redirect('/' + post.slug);
   });
 });
 
@@ -41,6 +39,7 @@ router.put('/entries/:id', (request, response) => {
     response.redirect('/admin/entries');
   });
 });
+
 
 router.delete('/entries/:id', (request, response) => {
   db.Entry.destroy({

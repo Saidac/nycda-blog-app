@@ -1,14 +1,15 @@
 const express = require('express'),
-      morgan = require('morgan'),
-      pug = require('pug'),
       bodyParser = require('body-parser'),
       methodOverride = require('method-override'),
-      db = require('./models'),
-      session = require('express-session'),
-      Sequelize = require('sequelize'),
-      app = express(),
-      adminRouter = require('./routes/admin');
+      morgan = require('morgan'),
+      pug = require('pug'),
+      Sequelize = require('sequelize');
 
+var db = require('./models');
+
+var app = express();
+
+var adminRouter = require('./routes/admin');
 
 app.set('view engine', 'pug');
 
@@ -29,18 +30,18 @@ app.use(methodOverride(function (request, response) {
 
 app.use('/admin', adminRouter);
 
-// put the dynamic routes at the very end !!
-
-//
-// app.post thing for commetns
-//
-//
 
 app.get('/', (request, response) => {
   db.Entry.findAll({ order: [['createdAt', 'DESC']] }).then((entries) => {
     response.render('index', { entries: entries });
   });
 });
+
+// app.get('/:id', (request, response) => {
+//    db.Entry.findById(request.params.id).then((entry) => {
+//          response.render('entries/show', { post: post });
+//   });
+// });
 
 app.get('/:slug', (request, response) => {
   db.Entry.findOne({
@@ -49,13 +50,13 @@ app.get('/:slug', (request, response) => {
    }
  }).then((entry) => {
      response.render('entries/show', { entry: entry});
-  });
+    });
 });
 
 
 db.sequelize.sync().then(() => {
   console.log('Connected to db');
-  app.listen(3000, () => {
-    console.log('Web Server is running on port 3000');
+  app.listen(3001, () => {
+    console.log('Web Server is running on port 3001');
   });
 });
