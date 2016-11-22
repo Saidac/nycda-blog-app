@@ -3,6 +3,7 @@ const express = require('express'),
       methodOverride = require('method-override'),
       morgan = require('morgan'),
       pug = require('pug'),
+      session = require('express-session'),
       Sequelize = require('sequelize');
 
 var db = require('./models');
@@ -14,6 +15,8 @@ var adminRouter = require('./routes/admin');
 app.set('view engine', 'pug');
 
 app.use(morgan('dev'));
+
+app.use(session({ secret: 'our secret key' }));
 
 app.use(express.static(__dirname + '/public'));
 
@@ -43,6 +46,7 @@ app.post('/entries/:id/comments', (request, response) => {
 
 
 app.get('/', (request, response) => {
+  console.log(request.session);
   db.Entry.findAll({ order: [['createdAt', 'DESC']] }).then((entries) => {
     response.render('index', { entries: entries });
   });
@@ -50,6 +54,34 @@ app.get('/', (request, response) => {
 
 app.get('/register', (request, response) => {
   response.render('users/new');
+});
+
+app.get('/login', (request, response) => {
+  response.render('login');
+});
+
+app.post('/login', (request, response) => {
+  console.log(request.body);
+
+  db.User.findOne({
+    where: {
+      email: request.body.email
+    }
+  }).then((userInDB) => {
+    if (userInDB.password === request.body.password) {
+      request.session.user = userInDB;
+      response.redirect('/');
+    } else {
+      response.redirect('/login');
+    }
+  }).catch(() => {
+    response.redirect('/login');
+  });
+});
+
+app.get('/logout', (request, response) => {
+  delete request.session.user;
+  response.redirect('/');
 });
 
 app.post('/users', (request, response) => {

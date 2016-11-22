@@ -1,9 +1,11 @@
 extends ../app.pug
 block content
   br
-  each entry in entries
-    .cointainer
-      .col-xs-8.offset-xs-2
+  .cointainer
+    .col-xs-8.offset-xs-2
+      h3 Edit blog entries
+      hr
+      each entry in entries
         .card.card-block
           .row
             .col-xs-9
