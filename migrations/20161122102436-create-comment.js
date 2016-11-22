@@ -22,12 +22,13 @@ module.exports = {
       EntryId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Entries',
+          model: 'Entry',
           key: 'id'
         },
         onUpdate: 'cascade',
         onDelete: 'cascade'
       }
+
     });
   },
   down: function(queryInterface, Sequelize) {
