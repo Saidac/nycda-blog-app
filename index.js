@@ -13,15 +13,6 @@ var app = express();
 
 var adminRouter = require('./routes/admin');
 
-// Playing around with creating middleware
-
-// var daLogzy =  (request, response, next) => {
-//   console.log('LOGGED');
-//   next();
-// };
-
-// app.use(daLogzy);
-
 app.set('view engine', 'pug');
 
 app.use(morgan('dev'));
@@ -63,11 +54,15 @@ app.post('/entries/:id/comments', (request, response) => {
 app.get('/', (request, response) => {
   console.log(request.session);
   db.Entry.findAll({ order: [['createdAt', 'DESC']] }).then((entries) => {
-    response.render('index', { entries: entries });
+    response.render('index', { entries: entries, user:request.session.user });
   });
 });
 
 app.get('/register', (request, response) => {
+  if (request.session.user) {
+    response.redirect('/admin/posts');
+  }
+
   response.render('users/new');
 });
 
@@ -77,8 +72,6 @@ app.get('/login', (request, response) => {
 });
 
 app.post('/login', (request, response) => {
-  console.log(request.body);
-
   db.User.findOne({
     where: {
       email: request.body.email
@@ -86,7 +79,7 @@ app.post('/login', (request, response) => {
   }).then((userInDB) => {
     if (userInDB.password === request.body.password) {
       request.session.user = userInDB;
-      response.redirect('/');
+      response.redirect('/admin/entries');
     } else {
       response.redirect('/login');
     }
@@ -115,7 +108,7 @@ app.get('/:slug', (request, response) => {
    }
  }).then((entry) => {
    return entry.getComments().then((comments) => {
-     response.render('entries/show', { entry: entry, comments: comments });
+     response.render('entries/show', { entry: entry, comments: comments, user:request.session.user });
    });
 }).catch((error) => {
   response.status(404).end();
