@@ -4,6 +4,7 @@ const express = require('express'),
       morgan = require('morgan'),
       pug = require('pug'),
       session = require('express-session'),
+      displayRoutes = require('express-routemap'),
       Sequelize = require('sequelize');
 
 var db = require('./models');
@@ -16,7 +17,12 @@ app.set('view engine', 'pug');
 
 app.use(morgan('dev'));
 
-app.use(session({ secret: 'our secret key' }));
+app.use(session({
+  name:'session-cookie',
+  secret: 'our secret key',
+  resave: true,
+  saveUninitialized: true
+ }));
 
 app.use(express.static(__dirname + '/public'));
 
@@ -48,21 +54,24 @@ app.post('/entries/:id/comments', (request, response) => {
 app.get('/', (request, response) => {
   console.log(request.session);
   db.Entry.findAll({ order: [['createdAt', 'DESC']] }).then((entries) => {
-    response.render('index', { entries: entries });
+    response.render('index', { entries: entries, user:request.session.user });
   });
 });
 
 app.get('/register', (request, response) => {
+  if (request.session.user) {
+    response.redirect('/admin/posts');
+  }
+
   response.render('users/new');
 });
 
+
 app.get('/login', (request, response) => {
-  response.render('login');
+  response.redirect('/admin');
 });
 
 app.post('/login', (request, response) => {
-  console.log(request.body);
-
   db.User.findOne({
     where: {
       email: request.body.email
@@ -70,7 +79,7 @@ app.post('/login', (request, response) => {
   }).then((userInDB) => {
     if (userInDB.password === request.body.password) {
       request.session.user = userInDB;
-      response.redirect('/');
+      response.redirect('/admin/entries');
     } else {
       response.redirect('/login');
     }
@@ -99,7 +108,7 @@ app.get('/:slug', (request, response) => {
    }
  }).then((entry) => {
    return entry.getComments().then((comments) => {
-     response.render('entries/show', { entry: entry, comments: comments });
+     response.render('entries/show', { entry: entry, comments: comments, user:request.session.user });
    });
 }).catch((error) => {
   response.status(404).end();
@@ -111,5 +120,6 @@ db.sequelize.sync().then(() => {
   console.log('Connected to db');
   app.listen(3001, () => {
     console.log('Web Server is running on port 3001');
+    displayRoutes(app);
   });
 });
