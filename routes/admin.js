@@ -43,14 +43,12 @@ router.get('/entries/:id/edit', (request, response) => {
      }).then((entry) => {
         response.render('entries/edit', { entry: entry, user:request.session.user });
      });
-      response.redirect('/login');
 });
 
 router.post('/entries', (request, response) => {
   db.Entry.create(request.body).then((entry) => {
     response.redirect('/' + entry.slug);
   });
-      response.redirect('/login');
 });
 
 router.put('/entries/:id', (request, response) => {
@@ -61,7 +59,6 @@ router.put('/entries/:id', (request, response) => {
   }).then(() => {
     response.redirect('/admin/entries');
   });
-    response.redirect('/login');
 });
 
 
@@ -73,7 +70,6 @@ router.delete('/entries/:id', (request, response) => {
   }).then(() => {
     response.redirect('/admin/entries');
   });
-  response.redirect('/login');
 });
 
 module.exports = router;
