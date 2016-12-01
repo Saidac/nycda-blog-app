@@ -24,7 +24,7 @@ app.use(session({
   saveUninitialized: true
  }));
 
-app.use(express.static(__dirname + '/public'));
+// app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -118,8 +118,8 @@ app.get('/:slug', (request, response) => {
 
 db.sequelize.sync().then(() => {
   console.log('Connected to db');
-  app.listen(3001, () => {
-    console.log('Web Server is running on port 3001');
+  app.listen(3002, () => {
+    console.log('Web Server is running on port 3002');
     displayRoutes(app);
   });
 });

@@ -1,23 +1,24 @@
-{
+module.exports = {
   "development": {
-    "username": "wille",
+    "username": process.env.DB_USERNAME,
     "password": null,
-    "database": "wille",
+    "database": "nycda_blogapp_testdb",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
-    "username": "wille",
+    "username": process.env.DB_USERNAME,
     "password": null,
-    "database": "wille",
+    "logging": false,
+    "database": "nycda_blogapp_testdb",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
     "username": "wille",
     "password": null,
-    "database": "wille",
+    "database": "nycda_blogapp_testdb",
     "host": "127.0.0.1",
     "dialect": "postgres"
   }
-}
+};
